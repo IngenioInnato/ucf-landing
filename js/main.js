@@ -32,7 +32,8 @@ var Email = { send: function (a) { return new Promise(function (n, e) { a.nocach
 // BEGIN validación de número telefónico
 let phone = document.querySelectorAll(".phone");
 // let form = document.forms['creditpoints'];
-let scriptURL = "";
+let scriptURL =
+  "https://script.google.com/macros/s/AKfycbzwDbReXg05RVYYpCpqsFA-3s9EgRVr3YCJ7dNuoNT0tSrCR30/exec";
 
 function strictValidation(input) {
   input.addEventListener('input', function() {
@@ -108,30 +109,29 @@ function formToJson(a) {
   return JSON.parse(x);
 }
 
-// function sendEmail(a, email) {
-//   let e = formToJson(a);
-//   Email.send({
-//     SecureToken: "3abd4a1e-bf22-4caf-8bea-27f68c1ab1ed",
-//     To: email,
-//     From: "leads@worldsolarprous.com",
-//     Subject: "Evento 18 / 09 - Nueva Participante",
-//     Body: `
-//     <h1>Datos del usuario</h1>
-//     <p>Nombre: ${e.name}. <br>
-//     Email: ${e.mail}. <br>
-//     Teléfono: ${e.phone}. <br>
-//     Estado: ${e.address}. <br>
-//     Ciudad: ${e.city}. <br>
-//     Fue añadido en <a href="https://docs.google.com/spreadsheets/d/1-mgA6Cc39HL8OW6etR0VkVj3K_KAwEwKjTo_IJ_AzEU/edit?usp=sharing">Google Sheet</a>. <br>
-//     </p>
-//     `,
-//   })
-//     .then((message) => {
-//       console.log("Mensaje Enviado Correctamente " + message);
-//       console.log(e);
-//     })
-//     .catch((message) => console.log("Error: " + message));
-// }
+function sendEmail(a, email) {
+  let e = formToJson(a);
+  Email.send({
+    SecureToken: "e71828a6-f301-4599-a627-5b9c13ac8cb2",
+    To: email,
+    From: "info@unitedcreditfamily.com",
+    Subject: "Nuevo Lead en Landing Page United Credit Family",
+    Body: `
+    <h1>Datos del usuario</h1>
+    <p>Nombre: ${e.name}. <br>
+    Email: ${e.mail}. <br>
+    Teléfono: ${e.phone}. <br>
+    Ciudad: ${e.city}. <br>
+    Fue añadido en <a href="https://docs.google.com/spreadsheets/d/1YC4aOE3cVgHbsNYYawk804FNCm3MqjTkdMFNkP3Uu1g/edit?usp=sharing">Google Sheet</a>. <br>
+    </p>
+    `,
+  })
+    .then((message) => {
+      console.log("Mensaje Enviado Correctamente " + message);
+      console.log(e);
+    })
+    .catch((message) => console.log("Error: " + message));
+}
 // END EMAIL
 
 // BEGIN Message
@@ -148,25 +148,25 @@ function message(form) {
 }
 
 // BEGIN Bootstrap Validación
-// let forms = document.getElementsByClassName('needs-validation');
-// // Loop over them and prevent submission
-// let validation = Array.prototype.filter.call(forms, function(form) {
-//   form.addEventListener('submit', function(e) {
-//     let f = formToJson(form);
-//     if (form.checkValidity() === false) {
-//       e.preventDefault();
-//       e.stopPropagation();
-//       clearPhone(phone);
-//     } else {
-//       e.preventDefault();
-//       clearPhone(phone);
-//       let sheet = dataToSheet(form, scriptURL);
-//       sendEmail(form, 'worldsolarpropr@gmail.com');
-//       message(form)
-//     }
-//     form.classList.add('was-validated');
-//   }, false);
-// });
+let forms = document.getElementsByClassName('needs-validation');
+// Loop over them and prevent submission
+let validation = Array.prototype.filter.call(forms, function(form) {
+  form.addEventListener('submit', function(e) {
+    let f = formToJson(form);
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+      clearPhone(phone);
+    } else {
+      e.preventDefault();
+      clearPhone(phone);
+      let sheet = dataToSheet(form, scriptURL);
+      sendEmail(form, 'unitedcreditfamily@gmail.com');
+      message(form)
+    }
+    form.classList.add('was-validated');
+  }, false);
+});
 // END Bootstrap Validación
 
 // BEGIN Flickity
